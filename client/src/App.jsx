@@ -6,7 +6,7 @@ import {
   Routes
 } from 'react-router-dom';
 
-import logo from './assets/logo.svg';
+import {logo} from './assets';
 import Home from './pages/Home.jsx'
 import CreatePost from './pages/CreatePost.jsx'
 
