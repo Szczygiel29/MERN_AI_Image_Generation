@@ -60,7 +60,8 @@ const CreatePost = () => {
         alert('Success');
         navigate('/');
       } catch (err) {
-        alert(err);
+        console.log(err)
+        alert('Niestety, API, z którego korzystam, utracił darmowy dostęp.');
       } finally {
         setLoading(false);
       }

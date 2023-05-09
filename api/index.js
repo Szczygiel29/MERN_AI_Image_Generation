@@ -4,7 +4,6 @@ import cors from 'cors'
 import connectDB from './mongodb/connect.js';
 import postRouters from './routers/postRouters.js'
 import dalleRouters from './routers/dalleRouters.js'
-import bodyParser from 'body-parser';
 
 dotenv.config();
 
