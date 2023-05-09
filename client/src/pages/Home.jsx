@@ -20,11 +20,47 @@ const RenderCards = ({ data, title }) => {
 const Home = () => {
   const [loading, setLoadin] = useState(false)
   const [allPosts, SetAllPosts] = useState(null)
-  const [searchText, SetSearchText] = useState('')
+  const [searchText, setSearchText] = useState('')
+  const [searchedResults, setSearchResult] = useState(null);
+  const [searchTimeout, setSearchTimeout] = useState(null)
 
   useEffect(() => {
+    const fetchPost = async () => {
+      setLoadin(true)
 
+      try{
+        const response = await fetch(`http://localhost:8080/api/v1/post`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if(response.ok) {
+          const result = await response.json();
+          SetAllPosts(result.data.reverse())
+        }
+      }catch(err){
+        console.log(err)
+      } finally {
+        setLoadin(false)
+      }
+    }
+
+    fetchPost();
   }, [])
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = allPosts.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()) || item.prompt.toLowerCase().includes(searchText.toLowerCase()));
+        setSearchResult(searchResult);
+      }, 500),
+    );
+  };
 
   return (
     <section className="max-w-7xl mx-auto">
@@ -35,7 +71,15 @@ const Home = () => {
         </p>
       </div>
       <div className="mt-16">
-        <FormField />
+        <FormField 
+         labelName="Search posts"
+         type="text"
+         name="text"
+         placeholder="Search posts"
+         value={searchText}
+         handleChange={handleSearchChange}
+
+        />
       </div>
       <div className="mt-10">
       {loading ? (
