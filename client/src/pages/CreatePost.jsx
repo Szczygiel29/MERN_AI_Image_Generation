@@ -33,7 +33,7 @@ const CreatePost = () => {
         const data = await response.json();
         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
       } catch (err) {
-        alert(err);
+        alert('Niestety, API, z którego korzystam, utracił darmowy dostęp.');
       } finally {
         setGenerationImage(false);
       }
@@ -60,7 +60,6 @@ const CreatePost = () => {
         alert('Success');
         navigate('/');
       } catch (err) {
-        console.log(err)
         alert('Niestety, API, z którego korzystam, utracił darmowy dostęp.');
       } finally {
         setLoading(false);
